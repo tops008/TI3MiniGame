@@ -10,34 +10,30 @@ def main():
     """
     That's it: the  main function
     """
+
+    #Create the application
     app = QtGui.QApplication(sys.argv)
 
+
+    #Create the hex grid
     radius = 50
     sides = 6
-    border=3
+    border=2
     ntilesWide = 7
-
 
     grid = HexGrid(QtCore.QRectF(0.0, 0.0, 800, 800))
     grid.addTiles(radius, sides, border, ntilesWide)
 
 
+    #Create the main menu and add the grid
+    menu = Menu()
+    menu.setGeometry(100, 0, 800, 800)
+    menu.grid = grid
+    menu.setCentralWidget(grid)
 
     
-    
-    testIcon = QtGui.QPixmap('/Users/armbrust/Downloads/tmp/images/white_warsun.png')
-    gfxPixItem = grid.scene.addPixmap(testIcon)
-    gfxPixItem.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
-    gfxPixItem.setPos(30, 30)
-    gfxPixItem.setAcceptDrops(True)
-    gfxPixItem.scale(0.5, 0.5)
-    #grid.scene.addItem(gfxPixItem)
-    #grid.fitInView(gfxPixItem)
-
-    #menu = Menu()
-    
-    #grid.setScene(grid.scene)
-    grid.show()
+    #Show the menu and execute
+    menu.show()
     app.exec_()
 
 # ==============================================================================
