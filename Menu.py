@@ -1,15 +1,16 @@
 from PyQt4 import QtCore, QtGui
 
 from Config import *
-from WarSun import *
+from Ship import *
+import Global
 
 class Menu(QtGui.QMainWindow):
 
     def __init__(self):
         super(Menu, self).__init__()
         
-        self.initUI()
         self.config = Config()
+        self.initUI()
 
         #Just a list of the ships on the board so they don't get garbage collected
         self.ships = list()
@@ -29,7 +30,8 @@ class Menu(QtGui.QMainWindow):
         exitAction.setShortcut('Ctrl+Q')
         exitAction.setStatusTip('Exit application')
         exitAction.triggered.connect(QtGui.qApp.quit)
-
+        exitAction.triggered.connect(self.config.closeEvent)
+        
         newGameAction = QtGui.QAction(QtGui.QIcon('newGame.png'), '&New Game', self)        
         newGameAction.setShortcut('Ctrl+N')
         newGameAction.setStatusTip('New Game')
@@ -63,13 +65,19 @@ class Menu(QtGui.QMainWindow):
 
         
     def newGame(self):
+        for ship in self.ships:
+            self.grid.scene.removeItem(ship.item)
         del self.ships[:]
 
         #Go through the current config and setup the ships
-        nWarSun = int(self.config.nWarSunsEdit.text())
+        for shipName in Global.ships:
+            nShips = 0
+            txt = self.config.nShipsField[shipName].text()
+            if txt != '':
+                nShips = int(txt)
+                print 'Number of ' + shipName + ' is ' + str(nShips)
 
-        for i in range(0, nWarSun):
-            warsun = WarSun()
-            warsun.setColor(str(self.config.colorEdit.text()))
-            warsun.createOnGrid(self.grid)
-            self.ships += [warsun]
+            for i in range(0, nShips):
+                ship = Ship(shipName, self.config.color)
+                ship.createOnGrid(self.grid)
+                self.ships += [ship]
