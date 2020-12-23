@@ -1,9 +1,9 @@
 import math
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 from QRegularPolygon import *
 
 # ==============================================================================
-class HexGrid(QtGui.QGraphicsView):
+class HexGrid(QtWidgets.QGraphicsView):
     """
     Graphics view for an hex grid.
     """
@@ -18,7 +18,7 @@ class HexGrid(QtGui.QGraphicsView):
         """
         super(HexGrid,self).__init__(parent)
 
-        self.scene = QtGui.QGraphicsScene(self)
+        self.scene = QtWidgets.QGraphicsScene(self)
         if rect != None: 
             if isinstance(rect, QtCore.QRectF): self.scene.setSceneRect(rect)
             else: raise StandardError ('Parameter rect should be QtCore.QRectF')
@@ -28,7 +28,7 @@ class HexGrid(QtGui.QGraphicsView):
 
     def addTiles(self, radius, sides, border, ntilesWide):
 
-        ntilesRadius = ntilesWide/2+1
+        ntilesRadius = int(ntilesWide/2+1)
         apothem = radius * math.cos(math.pi/sides)
         side = 2 * apothem * math.tan(math.pi/sides)
 
@@ -53,7 +53,7 @@ class HexGrid(QtGui.QGraphicsView):
                 
                 h = QRegularPolygon(sides, radius, center, angle)
                 brush = QtGui.QBrush(QtCore.Qt.SolidPattern)
-                #brush.setColor(QtGui.QColor().setRed(0.0))
+                #brush.setColor(QtWidgets.QColor().setRed(0.0))
                 h.setBrush(brush)
                 
                 polygons.append(h)

@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from PyQt5 import QtGui, QtWidgets
 
 
 class Ship():
@@ -11,13 +11,14 @@ class Ship():
 
     def createOnGrid(self, grid):
         iconName = 'icons/%s %s.png' % (self.color, self.shipName)
-        print 'iconName is ' + iconName
+        print('iconName is ' + iconName)
         icon = QtGui.QPixmap(iconName)
-
+        icon = icon.scaled(int(icon.width()*0.5), int(icon.height()*0.5))
+        
         self.item = grid.scene.addPixmap(icon)
-        self.item.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
+        self.item.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable)
         self.item.setPos(30, 30)
         self.item.setAcceptDrops(True)
-        self.item.scale(0.5, 0.5)
+        #self.item.scaled(0.5, 0.5)
 
 

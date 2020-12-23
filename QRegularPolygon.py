@@ -1,8 +1,8 @@
 import math
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 # ==============================================================================
-class QRegularPolygon(QtGui.QGraphicsPolygonItem):
+class QRegularPolygon(QtWidgets.QGraphicsPolygonItem):
     """
     Regular polygon of N sides
     """

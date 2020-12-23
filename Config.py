@@ -1,19 +1,19 @@
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 import Global
 
-class Config(QtGui.QWidget):
+class Config(QtWidgets.QWidget):
 
     def __init__(self):
         super(Config, self).__init__()
 
         #Setup the grid for the input fields
-        self.grid = QtGui.QGridLayout()
+        self.grid = QtWidgets.QGridLayout()
         self.grid.setSpacing(10)
 
         #Color is a drop-down box
         self.color = Global.colors[0]
-        self.colorLabel = QtGui.QLabel("Color", self)
-        self.colorBox = QtGui.QComboBox(self)
+        self.colorLabel = QtWidgets.QLabel("Color", self)
+        self.colorBox = QtWidgets.QComboBox(self)
         for color in Global.colors:
             self.colorBox.addItem(color)
         self.grid.addWidget(self.colorLabel, 0, 0)
@@ -25,8 +25,8 @@ class Config(QtGui.QWidget):
         self.nShips = {}
         self.nShipsField = {}
         for ship in Global.ships:
-            self.nShips[ship] = QtGui.QLabel(ship+'s')
-            self.nShipsField[ship] = QtGui.QLineEdit()
+            self.nShips[ship] = QtWidgets.QLabel(ship+'s')
+            self.nShipsField[ship] = QtWidgets.QLineEdit()
             self.grid.addWidget(self.nShips[ship], pos, 0)
             self.grid.addWidget(self.nShipsField[ship], pos, 1)
             pos += 1

@@ -1,10 +1,10 @@
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 from Config import *
 from Ship import *
 import Global
 
-class Menu(QtGui.QMainWindow):
+class Menu(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Menu, self).__init__()
@@ -26,13 +26,13 @@ class Menu(QtGui.QMainWindow):
         fileMenu = menubar.addMenu('&File')
 
         #Actions for file menu
-        exitAction = QtGui.QAction(QtGui.QIcon('exit.png'), '&Exit', self)        
+        exitAction = QtWidgets.QAction(QtGui.QIcon('exit.png'), '&Exit', self)        
         exitAction.setShortcut('Ctrl+Q')
         exitAction.setStatusTip('Exit application')
-        exitAction.triggered.connect(QtGui.qApp.quit)
+        exitAction.triggered.connect(QtWidgets.qApp.quit)
         exitAction.triggered.connect(self.config.closeEvent)
         
-        newGameAction = QtGui.QAction(QtGui.QIcon('newGame.png'), '&New Game', self)        
+        newGameAction = QtWidgets.QAction(QtGui.QIcon('newGame.png'), '&New Game', self)        
         newGameAction.setShortcut('Ctrl+N')
         newGameAction.setStatusTip('New Game')
         newGameAction.triggered.connect(self.newGame)
@@ -48,7 +48,7 @@ class Menu(QtGui.QMainWindow):
         settingsMenu = menubar.addMenu('&Settings')
         
         #Actions for settings
-        configAction = QtGui.QAction('&Config', self)
+        configAction = QtWidgets.QAction('&Config', self)
         configAction.setShortcut('Ctrl+C')
         configAction.setStatusTip('Open configuration')
         configAction.triggered.connect(self.openConfig)
@@ -75,7 +75,7 @@ class Menu(QtGui.QMainWindow):
             txt = self.config.nShipsField[shipName].text()
             if txt != '':
                 nShips = int(txt)
-                print 'Number of ' + shipName + ' is ' + str(nShips)
+                print('Number of ' + shipName + ' is ' + str(nShips))
 
             for i in range(0, nShips):
                 ship = Ship(shipName, self.config.color)
