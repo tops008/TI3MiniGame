@@ -17,19 +17,20 @@ def main():
 
     #Create the hex grid
     radius = 50
+    sides = 6
     border=2
     ntilesWide = 9
 
-    width=1000
-    height=1000
+    width=1024
+    height=1024
     
-    grid = HexGrid(QtCore.QRectF(0.0, 0.0, width, height), radius, border, nTilesWide)
-    grid.addTiles()
+    grid = HexGrid(QtCore.QRectF(0.0, 0.0, width, height))
+    grid.addTiles(radius, sides, border, ntilesWide)
 
 
     #Create the main menu and add the grid
     menu = Menu()
-    menu.setGeometry(50, 50, width, height)
+    menu.setGeometry(100, 0, width, height)
     menu.grid = grid
     menu.setCentralWidget(grid)
 
