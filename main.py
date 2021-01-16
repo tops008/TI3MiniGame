@@ -4,6 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from HexGrid import *
 from QRegularPolygon import *
 from Menu import *
+from Settings import *
 
 # ==============================================================================
 def main():
@@ -15,21 +16,19 @@ def main():
     app = QtWidgets.QApplication(sys.argv)
 
 
-    #Create the hex grid
-    radius = 50
-    border=2
-    ntilesWide = 9
-
-    width=1000
-    height=1000
+    #Open settings
+    settings = Settings('settings.json')
     
-    grid = HexGrid(QtCore.QRectF(0.0, 0.0, width, height), radius, border, nTilesWide)
-    grid.addTiles()
+    #Create the hex grid
+    grid = HexGrid(settings.data['HexGrid'],
+                   QtCore.QRectF(0.0, 0.0,
+                                 settings.data['Menu']['width'],
+                                 settings.data['Menu']['height']))
 
 
     #Create the main menu and add the grid
     menu = Menu()
-    menu.setGeometry(50, 50, width, height)
+    menu.setGeometry(settings.data['Menu'])
     menu.grid = grid
     menu.setCentralWidget(grid)
 

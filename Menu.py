@@ -14,6 +14,12 @@ class Menu(QtWidgets.QMainWindow):
 
         #Just a list of the ships on the board so they don't get garbage collected
         self.ships = list()
+
+    def setGeometry(self, settings):
+        super().setGeometry(settings['x'],
+                            settings['y'],
+                            settings['width'],
+                            settings['height'])
         
     def initUI(self):               
         
@@ -76,7 +82,7 @@ class Menu(QtWidgets.QMainWindow):
         step = 30
         offset = 0
         offsets = {}
-        for shipName in Global.ships:
+        for shipName in Global.shipTypes:
             nShips = 0
             txt = self.config.nShipsField[shipName].text()
             if txt != '':

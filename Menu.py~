@@ -69,7 +69,13 @@ class Menu(QtWidgets.QMainWindow):
             self.grid.scene.removeItem(ship.item)
         del self.ships[:]
 
-        #Go through the current config and setup the ships
+        #Go through the current config and setup the ships for each player
+        pos=[]
+        pos.append((30, 30))
+        pos.append((30, 770))
+        step = 30
+        offset = 0
+        offsets = {}
         for shipName in Global.ships:
             nShips = 0
             txt = self.config.nShipsField[shipName].text()
@@ -77,7 +83,15 @@ class Menu(QtWidgets.QMainWindow):
                 nShips = int(txt)
                 print('Number of ' + shipName + ' is ' + str(nShips))
 
-            for i in range(0, nShips):
-                ship = Ship(shipName, self.config.color)
-                ship.createOnGrid(self.grid)
-                self.ships += [ship]
+            for player in range(2):
+                for i in range(0, nShips):
+                    xOffset=0
+                    if shipName in offsets:
+                        xOffset = offsets[shipName]
+                    else:
+                        xOffset = offset
+                        offset += step
+                        offsets[shipName] = xOffset
+                    ship = Ship(shipName, self.config.colors[player])
+                    ship.createOnGrid(self.grid, (pos[player][0]+xOffset, pos[player][1]))
+                    self.ships += [ship]

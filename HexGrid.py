@@ -9,7 +9,7 @@ class HexGrid(QtWidgets.QGraphicsView):
     """
 
     # --------------------------------------------------------------------------
-    def __init__(self, radius, border, ntilesWide, rect=None, parent=None):
+    def __init__(self, settings, rect=None, parent=None):
         """
         Initializes an hex grid. This object will be a GraphicsView and it will
         also handle its corresponding GraphicsScene.
@@ -21,20 +21,23 @@ class HexGrid(QtWidgets.QGraphicsView):
         self.scene = QtWidgets.QGraphicsScene(self)
         if rect != None: 
             if isinstance(rect, QtCore.QRectF): self.scene.setSceneRect(rect)
-            else: raise StandardError ('Parameter rect should be QtCore.QRectF')
+            else: raise Exception ('Parameter rect should be QtCore.QRectF')
         self.setScene(self.scene)
 
-        self.radius=radius
-        self.border=border
-        self.ntilesWide=ntilesWide
+        
+        self.radius=settings['radius']
+        self.border=settings['border']
+        self.nTilesWide=settings['nTilesWide']
         self.sides=6
+
+        self.addTiles()
 
     def center(self):
         pass
 
     def addTiles(self):
 
-        ntilesRadius = int(self.ntilesWide/2+1)
+        nTilesRadius = int(self.nTilesWide/2+1)
         apothem = self.radius * math.cos(math.pi/self.sides)
         side = 2 * apothem * math.tan(math.pi/self.sides)
 
@@ -48,12 +51,12 @@ class HexGrid(QtWidgets.QGraphicsView):
         yoffset=100
         
         #start at the top middle, run down, and work your way to the sides
-        nRows=ntilesRadius
-        for col in range(self.ntilesWide):
+        nRows=nTilesRadius
+        for col in range(self.nTilesWide):
             #figure out where the top is
             for row in range(nRows):
                 xcenter=(1+col)*(apothem*2*math.cos(math.pi/self.sides)+self.border)+xoffset
-                ycenter=(math.fabs(ntilesRadius-col-1)+row*2)*(apothem+self.border)+yoffset
+                ycenter=(math.fabs(nTilesRadius-col-1)+row*2)*(apothem+self.border)+yoffset
                 #print col, row, xcenter, ycenter
                 center = QtCore.QPointF(xcenter,ycenter)
                 
@@ -65,7 +68,7 @@ class HexGrid(QtWidgets.QGraphicsView):
                 self.polygons.append(h)
                 self.scene.addItem(h)
                 
-            if col < ntilesRadius-1:
+            if col < nTilesRadius-1:
                 nRows += 1
             else:
                 nRows -= 1
