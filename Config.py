@@ -32,7 +32,7 @@ class Config(QtWidgets.QWidget):
         #Number of ships are line edit fields
         self.nShips = {}
         self.nShipsField = {}
-        for ship in Global.ships:
+        for ship in Global.shipTypes:
             self.nShips[ship] = QtWidgets.QLabel(ship+'s')
             self.nShipsField[ship] = QtWidgets.QLineEdit()
             self.grid.addWidget(self.nShips[ship], pos, 0)

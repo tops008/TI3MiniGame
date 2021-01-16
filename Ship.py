@@ -1,23 +1,22 @@
 from PyQt5 import QtGui, QtWidgets
 
+from GridObject import *
 
-class Ship():
+class Ship(GridObject):
 
     def __init__(self, shipName, color):
+        super().__init__('icons/%s %s.png' % (color, shipName))
+
         self.shipName = shipName
         self.color=color
 
+    def create(self, grid, pos):
+        #this isn't so nice, but it works...
+        #self = self.scaled(int(self.width()*0.5), int(self.height()*0.5))
+        super().create(grid, pos)
 
 
-    def createOnGrid(self, grid, pos):
-        iconName = 'icons/%s %s.png' % (self.color, self.shipName)
-        icon = QtGui.QPixmap(iconName)
-        icon = icon.scaled(int(icon.width()*0.5), int(icon.height()*0.5))
-        
-        self.item = grid.scene.addPixmap(icon)
-        self.item.setFlag(QtWidgets.QGraphicsItem.ItemIsMovable)
-        self.item.setPos(pos[0], pos[1])
-        self.item.setAcceptDrops(True)
+
 
 
 

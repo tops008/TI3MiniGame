@@ -2,25 +2,25 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from Config import *
 from Ship import *
+from Game import *
 import Global
 
-class Menu(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
 
-    def __init__(self):
-        super(Menu, self).__init__()
+    def __init__(self, settings, grid):
+        super().__init__()
         
         self.config = Config()
         self.initUI()
+        self.grid=grid
 
-        #Just a list of the ships on the board so they don't get garbage collected
-        self.ships = list()
-
-    def setGeometry(self, settings):
-        super().setGeometry(settings['x'],
-                            settings['y'],
-                            settings['width'],
-                            settings['height'])
+        self.setGeometry(settings['x'],
+                         settings['y'],
+                         settings['width'],
+                         settings['height'])
         
+        self.setCentralWidget(self.grid)
+
     def initUI(self):               
         
         self.statusBar()
@@ -71,33 +71,5 @@ class Menu(QtWidgets.QMainWindow):
 
         
     def newGame(self):
-        for ship in self.ships:
-            self.grid.scene.removeItem(ship.item)
-        del self.ships[:]
-
-        #Go through the current config and setup the ships for each player
-        pos=[]
-        pos.append((30, 30))
-        pos.append((30, 770))
-        step = 30
-        offset = 0
-        offsets = {}
-        for shipName in Global.shipTypes:
-            nShips = 0
-            txt = self.config.nShipsField[shipName].text()
-            if txt != '':
-                nShips = int(txt)
-                print('Number of ' + shipName + ' is ' + str(nShips))
-
-            for player in range(2):
-                for i in range(0, nShips):
-                    xOffset=0
-                    if shipName in offsets:
-                        xOffset = offsets[shipName]
-                    else:
-                        xOffset = offset
-                        offset += step
-                        offsets[shipName] = xOffset
-                    ship = Ship(shipName, self.config.colors[player])
-                    ship.createOnGrid(self.grid, (pos[player][0]+xOffset, pos[player][1]))
-                    self.ships += [ship]
+        self.game = Game()
+        self.game.create(self.grid, self.config)
