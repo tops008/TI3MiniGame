@@ -4,8 +4,8 @@ from GridObject import *
 
 class Ship(GridObject):
 
-    def __init__(self, shipName, color):
-        super().__init__('icons/%s %s.png' % (color, shipName))
+    def __init__(self, shipName, color, traj = Trajectory()):
+        super().__init__('icons/%s %s.png' % (color, shipName), traj)
 
         self.shipName = shipName
         self.color=color

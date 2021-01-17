@@ -1,0 +1,14 @@
+{
+    "HexGrid": {
+	"radius": 50,
+	"border": 0,
+	"nTilesWide": 9
+    },
+    
+    "Window": {
+	"x": 50,
+	"y": 50,
+	"width": 1000,
+	"height": 1000
+    }
+}
